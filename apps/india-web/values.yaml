@@ -1,0 +1,30 @@
+replicaCount: 1
+
+image:
+  repository: docker.io/varrinkalaprasad/india-web
+  tag: "c39432d70c95"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 80
+  nodePort: 30081
+
+resources:
+  requests:
+    cpu: "50m"
+    memory: "64Mi"
+  limits:
+    cpu: "250m"
+    memory: "128Mi"
+
+probes:
+  readiness:
+    path: /
+    initialDelaySeconds: 3
+    periodSeconds: 5
+  liveness:
+    path: /
+    initialDelaySeconds: 10
+    periodSeconds: 10

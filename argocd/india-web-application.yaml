@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: india-web
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/VarrinkalaPrasad/india-devops-gitops.git
+    targetRevision: main
+    path: apps/india-web
+    helm:
+      releaseName: india-web
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: india-web
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
